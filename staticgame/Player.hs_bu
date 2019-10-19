@@ -1,0 +1,151 @@
+-- | Write a report describing your design and strategy here.
+module Player (
+    playCard,
+    makeBid
+)
+where
+
+-- You can add more imports as you need them.
+import Hearts.Types
+import Cards
+import Debug.Trace
+import Data.Maybe()
+
+data Memory = Memory {
+    spadesPlayed :: Int,
+    heartsPlayed :: Int,
+    diamondsPlayed :: Int,
+    clubsPlayed :: Int,
+    queenPlayed :: Bool,
+     
+} deriving (Show, Read, Eq)
+-- let x = Memory {spadesPlayed = 1, heartsPlayed = 1, diamondsPlayed = 1, clubsPlayed = 1, queenPlayed = True}
+-- show x
+-- read "Memory {spadesPlayed = 1, heartsPlayed = 1, diamondsPlayed = 1, clubsPlayed = 1, queenPlayed = True, twoClubsPlayed = False}" :: Memory
+
+
+-- type Trick = [Play]
+-- type Play = (Card, String, PlayerId)
+-- We want [Card], therefore we must only get Card from Play by using "first" defined in Types.hs
+-- [(Card, PlayerId)] should be Trick I think (but it works as below)
+cardsInTrick :: [(Card, PlayerId)] -> [Card]
+cardsInTrick trick = map fst trick
+
+getSuit :: Card -> Suit
+getSuit (Card suit _) = suit
+
+-- getRank :: Card -> Rank
+-- getRank (Card ) rank) = rank
+
+
+cardsOfSuit :: Suit -> [Card] ->  [Card]
+cardsOfSuit suit cards = filter ((suit ==) . getSuit) cards
+
+-- obtained from FIT2102 lecture slides and changed into point free form
+sortCards :: [Card] -> [Card]
+sortCards [] = []
+sortCards (pivot:cards) = left cards ++ [pivot] ++ right cards
+    where
+        left = part (<pivot)
+        right = part (>=pivot)
+        part = (sortCards.) . filter
+
+lowestOfSuit :: Suit -> [Card] -> Card
+lowestOfSuit suit player_cards = head (sortCards (cardsOfSuit Spade player_cards))
+
+highestOfSuit :: Suit -> [Card] -> Card
+highestOfSuit suit player_cards = last (sortCards (cardsOfSuit Spade player_cards))
+
+prevMemory :: Maybe ([(Card, PlayerId)], String) -> String
+prevMemory (Just (a, b)) = b
+prevMemory Nothing = "N"
+
+prevCards :: Maybe ([(Card, PlayerId)], String) -> String
+prevCards (Just (a, b)) = show a
+prevCards Nothing = ""
+
+-- getPreviousPlayerCard :: Maybe -> Card
+-- getPreviousPlayerCard Maybe ([(card, player_id)], state) = card
+
+-- Strategy
+-- If you need to take a trick, use the highest card available
+-- Get rid of clubs and diamonds as soon as possible
+-- Count cards
+
+-- player_cards -> suit -> trick_cards -> card_to_play
+win :: [Card] -> [Card] -> Suit -> Card
+win player_cards trick_cards trick_suit = undefined
+
+lose :: [Card] -> [Card] -> Suit -> Card
+lose player_cards trick_cards trick_suit = undefined
+
+-- naivePlay :: PlayFunc
+-- naivePlay player_id player_cards trick previous_state
+--     | elem (Card Club Two) player_cards = trace (show prev_cards ++ "ID: " ++ show player_id ++ "\t\tPrev State:" ++ show previous_state ++ "\t\t\tMem:" ++ show prev_memory ++ "\t\t\tTrick: " ++ show trick) ((Card Club Two), prev_memory ++ player_id) -- If player has Two of Clubs, they must play it
+--     | not (null trick) && not (null (cardsOfSuit current_trick_suit player_cards)) = trace (show prev_cards ++  "ID: " ++ show player_id ++ "\t\tPrev State:" ++ show previous_state ++ "\t\t\tMem:" ++ show prev_memory ++ "\t\t\tTrick: " ++ show trick)  ((head $ cardsOfSuit current_trick_suit player_cards), prev_memory ++ player_id) -- If player does not have the leading suit, play the first card in their hand
+--     | not (null trick) && null (cardsOfSuit current_trick_suit player_cards) = trace (show prev_cards ++  "ID: " ++ show player_id ++ "\t\tPrev State:" ++ show previous_state ++ "\t\t\tMem:" ++ show prev_memory ++ "\t\t\tTrick: " ++ show trick)  ((head player_cards), prev_memory ++ player_id) -- If player does not have the leading suit, play the first card in their hand
+--     | otherwise = trace (show prev_cards ++  "ID: " ++ show player_id ++ "\t\tPrev State:" ++ show previous_state ++ "\t\t\tMem:" ++ show prev_memory ++ "\t\t\tTrick: " ++ show trick)  ((head $ sortCards player_cards), prev_memory ++ player_id)
+--     where 
+--         trick_cards = cardsInTrick trick
+--         current_trick_suit = getSuit (last trick_cards) -- gets the suit of the current trick, player must follow this suit and can only break the suit if they have no cards of this suit.
+--         prev_memory = prevMemory previous_state
+--         prev_cards = 
+--             let 
+--                 x = prevCards previous_state
+--                 mem = Memory {spadesPlayed = 1, heartsPlayed = 1, diamondsPlayed = 1, clubsPlayed = 1, queenPlayed = True, twoClubsPlayed = False}
+--             in
+--                 mem
+            
+--                 filter ((suit ==) . getSuit) cards
+naivePlay :: PlayFunc
+naivePlay player_id player_cards trick previous_state
+    | elem (Card Club Two) player_cards = trace (show memory ++ " o1 ID: " ++ show player_id ++ "\t\t\tPlayer Cards: " ++ show player_cards ++ "\t\t\tTrick: " ++ show trick ++ "\t\t\tPrev State:"++ show previous_state) ((Card Club Two), memory ++ player_id) -- If player has Two of Clubs, they must play it
+    | not (null trick) && not (null (cardsOfSuit current_trick_suit player_cards)) = trace (show memory ++ " o2 ID: " ++ show player_id ++ "\t\t\tPlayer Cards: " ++ show player_cards ++ "\t\t\tTrick: " ++ show trick ++ "\t\t\tPrev State:"++ show previous_state) ((head $ cardsOfSuit current_trick_suit player_cards), memory ++ player_id) -- If player does not have the leading suit, play the first card in their hand
+    | not (null trick) && null (cardsOfSuit current_trick_suit player_cards) = trace (show memory ++ " o3 ID: " ++ show player_id ++ "\t\t\tPlayer Cards: " ++ show player_cards ++ "\t\t\tTrick: " ++ show trick ++ "\t\t\tPrev State:"++ show previous_state) ((head player_cards), memory ++ player_id) -- If player does not have the leading suit, play the first card in their hand
+    | otherwise = trace (show memory ++ " o4 ID: " ++ show player_id ++ "\t\t\tPlayer Cards: " ++ show player_cards ++ "\t\t\tTrick: " ++ show trick ++ "\t\t\tPrev State:"++ show previous_state) ((head $ sortCards player_cards), memory ++ player_id)
+    where 
+        trick_cards = cardsInTrick trick
+        current_trick_suit = getSuit (last trick_cards) -- gets the suit of the current trick, player must follow this suit and can only break the suit if they have no cards of this suit.
+        memory = prevMemory previous_state
+
+naivePlay :: PlayFunc
+naivePlay player_id player_cards trick previous_state
+    | elem (Card Club Two) player_cards = ((Card Club Two), "A") -- If player has Two of Clubs, they must play it
+    | not (null trick) && not (null (cardsOfSuit current_trick_suit player_cards)) = ((head $ cardsOfSuit current_trick_suit player_cards), "A") -- If player does not have the leading suit, play the first card in their hand
+    | not (null trick) && null (cardsOfSuit current_trick_suit player_cards) = ((head player_cards), "A") -- If player does not have the leading suit, play the first card in their hand
+    | otherwise = ((head $ sortCards player_cards), "A")
+    where 
+        trick_cards = cardsInTrick trick
+        current_trick_suit = getSuit (last trick_cards) -- gets the suit of the current trick, player must follow this suit and can only break the suit if they have no cards of this suit.
+
+
+-- If you have (Card Club Two), you must play it first
+-- Get rid of high cards first
+-- If someone plays a high card, use the highest card after that
+-- If someone plays a low card, use the lowest card after that unless there is a high chance of taking the trick anyway, then use highest card (or try counting)
+-- smartPlay :: PlayFunc
+-- smartPlay player_id player_cards trick previous_state
+--     | elem (Card Club Two) player_cards = ((Card Club Two), "State")
+--     | not (null trick) && not (null (cardsOfSuit current_trick_suit player_cards)) = ((head $ cardsOfSuit current_trick_suit player_cards), "2")
+
+
+-- type PlayFunc
+--   =  PlayerId                            -- ^ this player's Id so they can identify themselves in the bids and tricks
+--   -> [Card]                              -- ^ the player's cards
+--   -> Trick                               -- ^ cards in the current trick, so far
+--   -> Maybe ([(Card, PlayerId)], String)  -- ^ previous player's state
+--   -> (Card, String)                      -- ^ the player's chosen card and new state
+
+playCard :: PlayFunc
+playCard player_id player_cards trick previous_state = naivePlay player_id player_cards trick previous_state
+
+playCard :: PlayFunc
+playCard player_id player_cards trick previous_state
+    | (elem (Card Club Two) player_cards) = ((Card Club Two), "A") -- If player has Two of Clubs, they must play it
+    | 
+    |
+    | otherwise = head player_cards
+
+-- | Not used, do not remove.
+makeBid :: BidFunc
+makeBid = undefined
