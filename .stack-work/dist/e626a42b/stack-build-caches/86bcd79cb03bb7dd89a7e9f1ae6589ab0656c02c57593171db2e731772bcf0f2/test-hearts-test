@@ -1,7 +1,7 @@
 C:\Users\Hyun\Documents\Uni\FIT2102\Assignments\Assignment 2\staticgame\Main.hs:
-  hash: 9aceaa0bc8bec6423043ca6c370631864e077147af53f092fc2b7d1fd8801db0
-  size: 960
-  modtime: 1571058692
+  hash: 83a7d8d4269ec37c326eba93902f2af8ebc7b41c4cefa2889dadeec587a4b178
+  size: 1180
+  modtime: 1571803862
 C:\Users\Hyun\Documents\Uni\FIT2102\Assignments\Assignment 2\test\Spec.hs:
   hash: 5ed5f9fdf360a0530fb32f6452dfa66bdbaaa36e003d03a01605f8a1030e6378
   size: 734
@@ -15,10 +15,10 @@ C:\Users\Hyun\Documents\Uni\FIT2102\Assignments\Assignment 2\package.yaml:
   size: 1669
   modtime: 1570058629
 C:\Users\Hyun\Documents\Uni\FIT2102\Assignments\Assignment 2\staticgame\Player.hs:
-  hash: 5e4e3ac440fb60e92c069078d385cef40609bdd62ee2a4b4acbcd4b9a8fb458d
-  size: 6714
-  modtime: 1571486192
+  hash: 3b7fe8883546a16a28e4b0841b8750161dd336de7aed4b3f0d2da851c3cda73d
+  size: 10098
+  modtime: 1571804765
 C:\Users\Hyun\Documents\Uni\FIT2102\Assignments\Assignment 2\hearts.cabal:
   hash: a8234fa5a4d371427b173718baade9a1203813f68ed5e0cc55443c13b03a4f79
   size: 2429
-  modtime: 1570876881
+  modtime: 1571493466

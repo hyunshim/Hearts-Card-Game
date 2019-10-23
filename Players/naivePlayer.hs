@@ -1,5 +1,5 @@
 -- | Write a report describing your design and strategy here.
-module NPlayer (
+module Player (
     playCard,
     makeBid
 )
@@ -8,7 +8,6 @@ where
 -- You can add more imports as you need them.
 import Hearts.Types
 import Cards
-import Data.Maybe
 
 -- import Debug.Trace
 
@@ -42,25 +41,6 @@ sortCards (pivot:cards) = left cards ++ [pivot] ++ right cards
         right = part (>=pivot)
         part = (sortCards.) . filter
 
-naivePlayer :: PlayFunc
-naivePlayer player_id player_cards current_trick previous_state
-    | elem (Card Club Two) player_cards = ((Card Club Two), memory ++ player_id)
-        -- If player has Two of Clubs, they must play it
-
-    | not (null current_trick) && not (null (cardsOfSuit current_trick_suit player_cards)) = ((head $ cardsOfSuit current_trick_suit player_cards), memory)
-        -- If player has a card with the leading suit, play the first card of that leading suit
-
-    -- | not (null current_trick) && null (cardsOfSuit current_trick_suit player_cards) = ((head player_cards), memory)
-    --     -- If player does not have a card with the leading suit, play the first card in the hand                                                    %%% Must change so it doesn't play a point card
-    | otherwise = ((head $ sortCards player_cards), memory)
-        where 
-            trick_cards = cardsInTrick current_trick
-                -- gets just the cards in the current trick
-
-            current_trick_suit = getSuit (last trick_cards)
-                -- gets the suit of the current trick, player must follow this suit and can only break the suit if they have no cards of this suit.
-            
-            memory = getMemory previous_state
 
 {-
 type PlayFunc
@@ -72,7 +52,24 @@ type PlayFunc
     -> (Card, String)                       -- ^ should return: (chosen Card, "new memory"); the memory is a string    
 -} 
 playCard :: PlayFunc
-playCard player_id player_cards current_trick previous_state = naivePlayer player_id player_cards current_trick previous_state
+playCard player_id player_cards current_trick previous_state
+    | elem (Card Club Two) player_cards = ((Card Club Two), memory ++ player_id)
+    -- If player has Two of Clubs, they must play it
+
+    | not (null current_trick) && not (null (cardsOfSuit current_trick_suit player_cards)) = ((head $ cardsOfSuit current_trick_suit player_cards), memory)
+    -- If player has a card with the leading suit, play the first card of that leading suit
+
+    -- | not (null current_trick) && null (cardsOfSuit current_trick_suit player_cards) = ((head player_cards), memory)
+    --     -- If player does not have a card with the leading suit, play the first card in the hand                                                    %%% Must change so it doesn't play a point card
+    | otherwise = ((head $ sortCards player_cards), memory)
+    where 
+        trick_cards = cardsInTrick current_trick
+            -- gets just the cards in the current trick
+
+        current_trick_suit = getSuit (last trick_cards)
+            -- gets the suit of the current trick, player must follow this suit and can only break the suit if they have no cards of this suit.
+        
+        memory = getMemory previous_state
 
 -- | Not used, do not remove.
 makeBid :: BidFunc
