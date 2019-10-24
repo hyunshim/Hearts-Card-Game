@@ -13,28 +13,22 @@ import Control.Monad
 -- need to change the Module names of those players (don't forget to change the
 -- module name back to "Player" when you submit your code)
 players :: [Player]
--- players =
---   [ newPlayer "4" Player.playCard Player.makeBid
---   , newPlayer "3" Player.playCard Player.makeBid
---   , newPlayer "2" Player.playCard Player.makeBid
---   , newPlayer "1" Player.playCard Player.makeBid
---   ]
 
 players =
-  [ newPlayer "n4" Player.naive Player.makeBid
-  , newPlayer "n3" Player.naive Player.makeBid
-  , newPlayer "n2" Player.naive Player.makeBid
+  [ newPlayer "4" Player.playCard Player.makeBid
+  , newPlayer "3" Player.playCard Player.makeBid
+  , newPlayer "2" Player.playCard Player.makeBid
   , newPlayer "1" Player.playCard Player.makeBid
   ]
 
 main :: IO ()
 main = do
   clearAllLogs players
-  played <- runEitherIO $ playGame 10000 players
+  played <- runEitherIO $ playGame 100 players
   case played of
     Right gr@(GameResult hr scores _) -> do
-      -- forM_ hr print
+      forM_ hr print
       putStrLn "=============="
       forM_ scores print
-      -- writeGame gr
+      writeGame gr
     Left e -> print e

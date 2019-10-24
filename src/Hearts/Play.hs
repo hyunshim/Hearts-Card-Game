@@ -66,7 +66,7 @@ hasScore max_score (GameResult _ scores _) =
 -- | Shuffle a deck then start the game, keep track of the score.
 playDeck :: GameResult -> EitherIO GameError GameResult
 playDeck (GameResult previous results players) = do
-  deck <- liftIO shuffledDeck
+  deck <- liftIO customShuffledDeck
   played <- playHand players deck
   return $ GameResult
     (played: previous)

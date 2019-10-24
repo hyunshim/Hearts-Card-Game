@@ -1,9 +1,7 @@
 -- | Implement the card-related types and helper functions
 module Cards where
 
-import Text.Read
 import Data.Char
-
 import Control.DeepSeq
 
 -- | The four base suits

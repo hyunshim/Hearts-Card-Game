@@ -3,9 +3,9 @@ C:\Users\Hyun\Documents\Uni\FIT2102\Assignments\Assignment 2\src\EitherIO.hs:
   size: 839
   modtime: 1568866330
 C:\Users\Hyun\Documents\Uni\FIT2102\Assignments\Assignment 2\src\Hearts\Play.hs:
-  hash: 4cdb0f9d98fa570a5f45028ca4da1601bcb4216a16753b3eb62950a370974910
-  size: 8342
-  modtime: 1568866330
+  hash: f56c0620cc31f13853a7ab547182130f4c531228b2677a1608f0522b00ee2bde
+  size: 8348
+  modtime: 1571924544
 C:\Users\Hyun\Documents\Uni\FIT2102\Assignments\Assignment 2\README.md:
   hash: 3e5dde949aa48e924792303553439a14ead915c27f8512944ccba7be640424c7
   size: 129
@@ -31,13 +31,13 @@ C:\Users\Hyun\Documents\Uni\FIT2102\Assignments\Assignment 2\src\Logs.hs:
   size: 2881
   modtime: 1568866763
 C:\Users\Hyun\Documents\Uni\FIT2102\Assignments\Assignment 2\src\Cards.hs:
-  hash: 15a1aa6b7d185828ebe7f09cf9a25295a0d64f37fe4527a11394614896b9681a
-  size: 1790
-  modtime: 1568866330
+  hash: 1e8c89aebf06bee0cc69bed03b4ffe54ac6556f4f66240c5c328d2a0d4442219
+  size: 1772
+  modtime: 1571924567
 C:\Users\Hyun\Documents\Uni\FIT2102\Assignments\Assignment 2\src\Deck.hs:
-  hash: 2d286d52c9a055fbeaccaaa1df61f351db413d416d1ca5d0967dfcb2c7e3ed21
-  size: 680
-  modtime: 1568866330
+  hash: 27b51914ae48edd0bb380769011d18c5a6522a1b4caa469c8689714d2feb33ff
+  size: 2194
+  modtime: 1571924572
 C:\Users\Hyun\Documents\Uni\FIT2102\Assignments\Assignment 2\hearts.cabal:
   hash: a8234fa5a4d371427b173718baade9a1203813f68ed5e0cc55443c13b03a4f79
   size: 2429

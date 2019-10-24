@@ -1,7 +1,6 @@
 module Player (
     playCard,
-    makeBid,
-    naive
+    makeBid
 )
 where
 
@@ -24,6 +23,8 @@ Introduction
         Variables will be named using snake_case.
 
     All simple functions have been made point-free to a degree that will still be understandable.
+
+    A custom random deck generator has also been implemented to strengthen the deck generation and provide more accurate results.
 
 
 Strategy
@@ -301,23 +302,3 @@ sortCards (pivot:cards) = left cards ++ [pivot] ++ right cards
 -- | Not used, do not remove.
 makeBid :: BidFunc
 makeBid = undefined
-
-naive :: PlayFunc
-naive _ player_cards current_trick previous_state
-    | elem (Card Club Two) player_cards = ((Card Club Two), memory)
-    -- If player has Two of Clubs, they must play it
-
-    | not (null current_trick) && not (null (cardsOfSuit current_trick_suit player_cards)) = ((head $ cardsOfSuit current_trick_suit player_cards), memory)
-    -- If player has a card with the leading suit, play the first card of that leading suit
-
-    -- | not (null current_trick) && null (cardsOfSuit current_trick_suit player_cards) = ((head player_cards), memory)
-    --     -- If player does not have a card with the leading suit, play the first card in the hand                                                    %%% Must change so it doesn't play a point card
-    | otherwise = ((head $ sortCards player_cards), memory)
-    where 
-        trick_cards = cardsInTrick current_trick
-            -- gets just the cards in the current trick
-
-        current_trick_suit = getSuit (last trick_cards)
-            -- gets the suit of the current trick, player must follow this suit and can only break the suit if they have no cards of this suit.
-        
-        memory = getMemory previous_state
