@@ -18,3 +18,4 @@ The game goes on until at least one player has scored more than 100 points and t
 **Shooting the Moon:** In case a player took all the point cards, she scores 0 points and the other players all score 26 points.
 
 ## Example
+![](hearts.png)
