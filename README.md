@@ -16,3 +16,5 @@ The game goes on until at least one player has scored more than 100 points and t
 **Leading:** The player with the Two of Clubs leads (starts) the first trick with this card.
 **Breaking:** No player may start a trick with a Heart before any has been played, unless they have no other choice.
 **Shooting the Moon:** In case a player took all the point cards, she scores 0 points and the other players all score 26 points.
+
+## Example
